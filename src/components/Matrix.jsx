@@ -6,7 +6,7 @@ const Matrix = () => {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ];
-  //! проверка ячеек
+
   const arrayСheckValue = (board, value) => {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
@@ -23,9 +23,7 @@ const Matrix = () => {
   let col = Math.floor(Math.random() * 4);
 
   const generateRandom = board => {
-    //!проверка массива,  возвращаем доску, если клетки больше нет
     if (!arrayСheckValue(board, 0)) {
-      // console.log(board);
       return board;
     }
 
@@ -53,7 +51,7 @@ const Matrix = () => {
   };
   const [check, setCheck] = useState(0);
   const [checkWin, setCheckWin] = useState("");
-  let [winCheck, setWinCheck] = useState(128);
+  let [winCheck, setWinCheck] = useState(2048);
   let [addRemClass, setAddRemClass] = useState(false);
 
   //! Объединитm ячейки с одинаковым значением
@@ -209,13 +207,6 @@ const Matrix = () => {
     setMatstate(generateRandom(matrix()));
     setAddRemClass(false);
   };
-
-  // const continueGame = () => {
-  //   // let continueBtn = document.querySelector(".continue");
-  //   // you__win.classList.add("hide");
-  //   // winCheck += winCheck * 2;
-  //   setAddRemClass(false);
-  // };
 
   return (
     <>

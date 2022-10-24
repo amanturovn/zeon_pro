@@ -1,6 +1,7 @@
 .container {
-  width: 500px;
+  width: 520px;
   margin: 0 auto;
+  padding: 0 8px;
 }
 .header {
   display: flex;
@@ -11,18 +12,15 @@
 .header__chek {
   width: 100px;
   height: 60px;
-  /* border: 6px solid black; */
   background: #bbada0;
   border-radius: 5px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   text-align: center;
   color: white;
   font-size: 16px;
   font-weight: 700;
   transition: 1s;
 }
+
 .header__chek p {
   padding: 6px;
   margin: 0;
@@ -49,9 +47,7 @@
 }
 
 .square {
-  /* position: relative; */
   width: 500px;
-  /* height: 500px; */
   background: #bbada0;
   display: flex;
   flex-direction: column;
@@ -94,13 +90,27 @@ h1 {
     display: block;
   }
 }
+@media (max-width: 500px) {
+  .header__chek p {
+    font-size: 28px;
+  }
+  .header__chek {
+    width: 180px;
+    height: 80px;
+    margin: 5px;
+  }
+  .header__chek div {
+    font-size: 30px;
+  }
+}
 
 .square__section_btn {
-  width: 80px;
-  height: 60px;
-  border-radius: 5px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   margin: 5px;
-  font-size: 20px;
+  font-size: 26px;
+  font-weight: 700;
   border: none;
   background-color: #bbada0;
   color: #eee4da;
