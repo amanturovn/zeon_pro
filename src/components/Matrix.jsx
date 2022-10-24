@@ -18,53 +18,25 @@ const Matrix = () => {
 
     return false;
   };
-  //! проверка массива
-  // const arrayСheck = board => {
-  //   return !arrayСheckValue(board, 0);
-  // };
-  // const asdasd = board => {
-  //   let row = Math.floor(Math.random() * 4);
-  //   let col = Math.floor(Math.random() * 4);
-  //   board[row][col] = 4;
-  //   // return board;
-  // };
-  // asdasd(matrix());
+
+  let row = Math.floor(Math.random() * 4);
+  let col = Math.floor(Math.random() * 4);
 
   const generateRandom = board => {
     //!проверка массива,  возвращаем доску, если клетки больше нет
     if (!arrayСheckValue(board, 0)) {
-      console.log(board);
+      // console.log(board);
       return board;
     }
-    // if (arrayСheck(board)) {
-    //   console.log("over");
-    //   return board;
-    // }
 
-    //! случайным образом выбирать ячейку, пока эта ячейка не станет пустой
-    let row = Math.floor(Math.random() * 4);
-    let col = Math.floor(Math.random() * 4);
-
-    for (let i = 0; i < board.length; i++) {
-      let everyArr = board[i];
-      let aasd = everyArr.every(elem => elem === 0);
-      if (aasd) {
-        board[col][row] =
-          (Math.random() > 1 && 2) || Math.random() > 0.1 ? 2 : 4;
-      }
-
-      while (board[row][col] !== 0) {
-        row = Math.floor(Math.random() * 4);
-        col = Math.floor(Math.random() * 4);
-      }
-      board[row][col] = 2;
-      return board;
+    while (board[row][col] !== 0) {
+      row = Math.floor(Math.random() * 4);
+      col = Math.floor(Math.random() * 4);
     }
+    board[row][col] = 2;
+    return board;
   };
 
-  // generateRandom(board);
-
-  //!
   const compressLine = board => {
     const newBoard = matrix();
     for (let i = 0; i < board.length; i++) {
@@ -79,16 +51,12 @@ const Matrix = () => {
     }
     return newBoard;
   };
-  //! Объединитm ячейки с одинаковым значением
   const [check, setCheck] = useState(0);
   const [checkWin, setCheckWin] = useState("");
-  // const [winCheck, setWinCheck] = useState(checkWin);
-  // console.log(checkWin);
-  // const you__win = document.querySelector(".you__win");
-  let [winCheck, setWinCheck] = useState(16);
+  let [winCheck, setWinCheck] = useState(128);
   let [addRemClass, setAddRemClass] = useState(false);
 
-  // console.log(winCheck);
+  //! Объединитm ячейки с одинаковым значением
   const connectСell = board => {
     let checkMerge = check;
     for (let i = 0; i < board.length; i++) {
@@ -97,10 +65,7 @@ const Matrix = () => {
           board[i][j] = board[i][j] * 2;
           if (board[i][j] == winCheck) {
             setCheckWin("You Win!");
-            // you__win.classList.remove("hide");
-            // onKeyDown = isDisabled;
             setAddRemClass(true);
-            // winCheck = winCheck * 2;
             setWinCheck(winCheck * 2);
           }
           board[i][j + 1] = 0;
@@ -169,6 +134,19 @@ const Matrix = () => {
 
   const [board, setMatstate] = useState(generateRandom(matrix()));
 
+  function getRandomCell(board) {
+    let emptyCell = 0;
+    board.map(elem => {
+      elem.map(item => {
+        emptyCell += +item;
+      });
+    });
+    if (emptyCell == 2) {
+      board[col][row] = (Math.random() > 1 && 2) || Math.random() > 0.1 ? 2 : 4;
+    }
+  }
+  getRandomCell(board);
+
   const onKeyDown = e => {
     switch (e.key) {
       case "ArrowLeft":
@@ -189,7 +167,29 @@ const Matrix = () => {
         break;
     }
   };
+  const onClickFunc = e => {
+    switch (e) {
+      case "btn1":
+        const newBoard = moveLeft(board);
+        setMatstate(generateRandom(newBoard));
+        break;
+      case "btn2":
+        const newBoard2 = moveRight(board);
+        setMatstate(generateRandom(newBoard2));
+        break;
+      case "btn4":
+        const newBoard3 = moveUp(board);
+        setMatstate(generateRandom(newBoard3));
+        break;
+      case "btn3":
+        const newBoard4 = moveDown(board);
+        setMatstate(generateRandom(newBoard4));
+        break;
+    }
+  };
+
   const [bestScore, setBestScore] = useState(localStorage.getItem("bestscore"));
+
   useEffect(() => {
     if (!localStorage.setItem("bestscore", bestScore)) {
       localStorage.setItem("bestscore", bestScore);
@@ -204,12 +204,10 @@ const Matrix = () => {
     };
   });
 
-  // const [hide,setHide]=useState(false)
   const restart = () => {
     setCheck(0);
     setMatstate(generateRandom(matrix()));
     setAddRemClass(false);
-    // you__win.classList.add("hide");
   };
 
   // const continueGame = () => {
@@ -258,6 +256,34 @@ const Matrix = () => {
               </div>
             );
           })}
+        </div>
+        <div className="square__section">
+          <button
+            onClick={e => onClickFunc(e.target.id)}
+            id="btn4"
+            className="square__section_btn">
+            Up
+          </button>
+          <div>
+            <button
+              onClick={e => onClickFunc(e.target.id)}
+              id="btn1"
+              className="square__section_btn">
+              Left
+            </button>
+            <button
+              onClick={e => onClickFunc(e.target.id)}
+              id="btn2"
+              className="square__section_btn">
+              Rigth
+            </button>
+          </div>
+          <button
+            onClick={e => onClickFunc(e.target.id)}
+            id="btn3"
+            className="square__section_btn">
+            Down
+          </button>
         </div>
       </div>
     </>
